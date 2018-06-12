@@ -1,0 +1,24 @@
+---
+  - hosts: aws
+    become: true
+
+    tasks:
+      - name: install docker
+        yum:
+          name: docker
+          state: present
+      - name: install pip docker-py
+        pip: 
+          name: docker-py
+      - name: start docker
+        service:
+          name: docker
+          state: started
+          enabled: yes
+      - name: start jenkins
+        docker_container:
+          name: 'jenkins'
+          image: 'jenkins'
+          ports:
+              - '8080:8080'
+          restart_policy: 'always'

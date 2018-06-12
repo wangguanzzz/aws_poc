@@ -1,5 +1,5 @@
 [aws:vars]
-ansible_ssh_private_key_file=~/homekey.pem
+ansible_ssh_private_key_file=/home/chriswang/chrispoc.pem
 
 [aws]
-ec2-18-216-210-112.us-east-2.compute.amazonaws.com  ansible_ssh_user=ec2-user 
+ec2-18-220-253-217.us-east-2.compute.amazonaws.com  ansible_ssh_user=ec2-user 
