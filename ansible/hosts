@@ -1,7 +1,8 @@
 [aws:vars]
-ansible_ssh_private_key_file=/home/chriswang/chrispoc.pem
+ansible_ssh_private_key_file=/home/chriswang/homekey.pem
 
 [aws]
-ec2-18-220-10-6.us-east-2.compute.amazonaws.com  ansible_ssh_user=ec2-user jenkins=true
-ec2-52-14-182-207.us-east-2.compute.amazonaws.com ansible_ssh_user=ec2-user gitlab=true
-ec2-18-191-125-77.us-east-2.compute.amazonaws.com ansible_ssh_user=ec2-user nexus=true
+ec2-18-217-173-27.us-east-2.compute.amazonaws.com ansible_ssh_user=ec2-user 
+
+[desktop]
+ec2-18-217-173-27.us-east-2.compute.amazonaws.com ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/chriswang/homekey.pem 

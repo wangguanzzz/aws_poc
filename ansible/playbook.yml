@@ -15,27 +15,39 @@
           name: docker
           state: started
           enabled: yes
-      - name: start jenkins
+
+  - hosts: desktop
+    become: true
+
+    tasks:
+      - name: start desktop
         docker_container:
-          name: 'jenkins'
-          image: 'jenkins'
+          name: 'desktop'
+          image: 'consol/centos-xfce-vnc'
           ports:
-              - '80:8080'
+            - '5901:5901'
           restart_policy: 'always'
-        when: jenkins|default(false) == true
-      - name: start gitlab-ce
-        docker_container:
-          name: 'gitlab'
-          image: 'gitlab/gitlab-ce'
-          ports:
-              - '80:80'
-          restart_policy: 'always'
-        when: gitlab|default(false) == true
-      - name: start nexus
-        docker_container:
-          name: 'nexus'
-          image: 'nexus'
-          ports:
-            - '80:8081'
-          restart_policy: 'always'
-        when: nexus|default(false) == true
+#      - name: start jenkins
+#        docker_container:
+#          name: 'jenkins'
+#          image: 'jenkins'
+#          ports:
+#              - '80:8080'
+#          restart_policy: 'always'
+        
+#      - name: start gitlab-ce
+#        docker_container:
+#          name: 'gitlab'
+#          image: 'gitlab/gitlab-ce'
+#          ports:
+#              - '80:80'
+#          restart_policy: 'always'
+        
+#      - name: start nexus
+#        docker_container:
+#          name: 'nexus'
+#          image: 'nexus'
+#          ports:
+#            - '80:8081'
+#          restart_policy: 'always'
+        
