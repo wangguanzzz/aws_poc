@@ -8,17 +8,32 @@
             src: template/test.j2
             dest: /test.jmx
         vars: 
-          - threads: 1000
+          - threads: 200
       - name: test
         shell: /apache-jmeter-4.0/bin/jmeter -n -t /test.jmx -l /result.csv
 
-      - name: 
-        shell: cat /result.csv
-        register: hello
-      - debug: msg="{{hello}}"
+      - name: fetch the result csv
+        fetch: 
+          src: /result.csv
+          dest: result
+
+      - name: fetch test play
+        fetch:
+          src: /test.jmx
+          dest: result
 
       - name: cleanup
         file:
           path: /result.csv
           state: absent
 
+
+#      - name: load ruby summary
+#        template:
+#            src: template/summary.rb
+#            dest: /summary.rb
+
+#      - name: 
+#        shell:  ruby /summary.rb
+#        register: hello
+#      - debug: msg="{{hello}}"

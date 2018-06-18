@@ -35,4 +35,11 @@
           name: ruby
           state: present
 
+      - name: install jmeter
+        unarchive: 
+          src: http://www-us.apache.org/dist//jmeter/binaries/apache-jmeter-4.0.zip
+          dest: /
+          remote_src: yes
+
+
 
