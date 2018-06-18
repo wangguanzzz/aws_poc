@@ -1,0 +1,38 @@
+---
+  - hosts: perf-server1
+    become: true
+
+    tasks:
+      - name: install httpd
+        yum:
+          name: httpd
+          state: present
+      - name: start httpd
+        service:
+          name: httpd
+          state: started
+          enabled: yes
+      - name: load home page
+        template:
+            src: template/homepage.html
+            dest: /var/www/html/homepage.html
+
+  - hosts: perf-server2
+    become: true
+
+    tasks:
+      - name: install JDK
+        yum:
+          name: java-1.7.0-openjdk
+          state: absent
+      - name: install JDK
+        yum:
+          name: java-1.8.0-openjdk
+          state: present
+
+      - name: install ruby
+        yum:
+          name: ruby
+          state: present
+
+

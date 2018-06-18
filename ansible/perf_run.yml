@@ -1,0 +1,24 @@
+---
+  - hosts: perf-server2
+    become: true
+
+    tasks:
+      - name: load test template
+        template:
+            src: template/test.j2
+            dest: /test.jmx
+        vars: 
+          - threads: 1000
+      - name: test
+        shell: /apache-jmeter-4.0/bin/jmeter -n -t /test.jmx -l /result.csv
+
+      - name: 
+        shell: cat /result.csv
+        register: hello
+      - debug: msg="{{hello}}"
+
+      - name: cleanup
+        file:
+          path: /result.csv
+          state: absent
+
