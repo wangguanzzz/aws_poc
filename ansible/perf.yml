@@ -3,6 +3,8 @@
     become: true
 
     tasks:
+      - include_vars: users.yml
+
       - name: install httpd
         yum:
           name: httpd
@@ -15,14 +17,20 @@
       - name: load home page
         template:
             src: template/homepage.html
-            dest: /var/www/html/homepage.html
-      - name: install users
+            dest: /var/www/html/homepage.html 
+      - name: add users
         user: 
-          name: "{{ item }}"
+          name: "{{ item.username }}"
           state: present
-        loop:
-          - tester1
-          - tester2
+        with_items: '{{users}}'
+      
+      - name: Set authorized keys
+        authorized_key:
+          user: "{{ item.username }}"
+          key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCcJcNBh1P+jPkCWwIkt068hg6ZvuYnNaAUV7vqQbLHZqJgP5x0uHL18kr412ORY5E82WX/rNNCE8iJLCV4HvPA8wNeY2Hq0HyKzjyba4MjlBPaKWWK8N8FBCzF1tTKycQdPZTGmeFr3+1aizQdhWJ4G6YJl3yfLRpQqNUNzW9sbrhI8AfBjxhNnxOlFulawMBrZ9NRqzRAWfZppBn28uetV345hCXm08YgiUUu4ePLAHZNB5uMIDIS88BHy6FMwKK+IHAGTmAfNEjxlhl0kgwoVeKvVxMHIPVRMPR0waLCqn/6fXNlCeG51KjKTpOKHOPRdlWYhvahmuFIFE9B5NOB office
+        with_items: '{{users}}'
+
+
   - hosts: perf-server2
     become: true
 

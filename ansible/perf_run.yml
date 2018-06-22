@@ -3,14 +3,29 @@
     become: true
 
     tasks:
-      - name: load test template
+ #     - name: load test template
+ #       template:
+ #           src: template/test.j2
+ #           dest: /test.jmx
+ #       vars: 
+ #         - threads: 200
+ #     - name: test
+ #       shell: /apache-jmeter-4.0/bin/jmeter -n -t /test.jmx -l /result.csv
+ #     - name: load test template
+ #       template:
+ #           src: template/test.j2
+ #           dest: /test.jmx
+ 
+      - name: load user files
         template:
-            src: template/test.j2
-            dest: /test.jmx
-        vars: 
-          - threads: 200
-      - name: test
-        shell: /apache-jmeter-4.0/bin/jmeter -n -t /test.jmx -l /result.csv
+            src: template/users.csv
+            dest: /users.csv
+
+      - name: load private key
+        template:
+            src: template/office.pem
+            dest: /office.pem
+
 
       - name: fetch the result csv
         fetch: 
