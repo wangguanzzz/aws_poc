@@ -16,7 +16,13 @@
         template:
             src: template/homepage.html
             dest: /var/www/html/homepage.html
-
+      - name: install users
+        user: 
+          name: "{{ item }}"
+          state: present
+        loop:
+          - tester1
+          - tester2
   - hosts: perf-server2
     become: true
 
@@ -35,6 +41,11 @@
           name: ruby
           state: present
 
+      - name: install unzip
+        yum:
+          name: unzip
+          state: present
+
       - name: install jmeter
         unarchive: 
           src: http://www-us.apache.org/dist//jmeter/binaries/apache-jmeter-4.0.zip
@@ -44,5 +55,9 @@
         get_url: 
           url: https://github.com/yciabaud/jmeter-ssh-sampler/releases/download/jmeter-ssh-sampler-1.1.1/ApacheJMeter_ssh-1.1.1.jar
           dest: /apache-jmeter-4.0/lib/ext/ApacheJMeter_ssh-1.1.1.jar
-               
+      
+      - name: add ssh plugin
+        get_url:
+          url: https://github.com/yciabaud/jmeter-ssh-sampler/releases/download/jmeter-ssh-sampler-1.1.1/jsch-0.1.54.jar
+          dest: /apache-jmeter-4.0/lib/ext/jsch-0.1.54.jar
 
