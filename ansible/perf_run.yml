@@ -18,14 +18,27 @@
  
       - name: load user files
         template:
-            src: template/users.csv
-            dest: /users.csv
+            src: template/user.csv
+            dest: /user.csv
 
       - name: load private key
         template:
             src: template/office.pem
             dest: /office.pem
 
+      - name: change the permission
+        file: 
+          path: /office.pem
+          state: file
+          mode: 0400
+
+      - name: load test template
+        template:
+            src: template/sftp.j2
+            dest: /sftp.jmx
+
+      - name: test
+        shell: /apache-jmeter-4.0/bin/jmeter -n -t /sftp.jmx -l /result.csv
 
       - name: fetch the result csv
         fetch: 
@@ -34,7 +47,7 @@
 
       - name: fetch test play
         fetch:
-          src: /test.jmx
+          src: /sftp.jmx
           dest: result
 
       - name: cleanup
