@@ -18,7 +18,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">{{ thread_number }}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">0</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -46,7 +46,7 @@
           <stringProp name="password"></stringProp>
           <intProp name="port">22</intProp>
           <boolProp name="printFile">true</boolProp>
-          <stringProp name="source">/user.csv</stringProp>
+          <stringProp name="source">{{ source_file }}</stringProp>
           <stringProp name="sshkeyfile">/office.pem</stringProp>
           <stringProp name="username">${username}</stringProp>
         </org.apache.jmeter.protocol.ssh.sampler.SSHSFTPSampler>
