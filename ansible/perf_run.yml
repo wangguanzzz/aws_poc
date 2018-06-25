@@ -16,30 +16,7 @@
  #           src: template/test.j2
  #           dest: /test.jmx
  
-      - name: load user files
-        template:
-            src: template/user.csv
-            dest: /user.csv
 
-      - name: load private key
-        template:
-            src: template/office.pem
-            dest: /office.pem
-
-      - name: change the permission
-        file: 
-          path: /office.pem
-          state: file
-          mode: 0400
-
-      - name: generate load 1
-        shell: dd if=/dev/zero of=/010000KB bs=10000K count=1
-
-      - name: generate load 2
-        shell: dd if=/dev/zero of=/001000KB bs=1000K count=1
-
-      - name: generate load 3
-        shell: dd if=/dev/zero of=/000100KB bs=100K count=1
 
 
 
