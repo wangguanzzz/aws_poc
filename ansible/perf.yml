@@ -5,19 +5,7 @@
     tasks:
       - include_vars: users.yml
 
-      - name: install httpd
-        yum:
-          name: httpd
-          state: present
-      - name: start httpd
-        service:
-          name: httpd
-          state: started
-          enabled: yes
-      - name: load home page
-        template:
-            src: template/homepage.html
-            dest: /var/www/html/homepage.html 
+
       - name: add users
         user: 
           name: "{{ item.username }}"

@@ -1,23 +1,39 @@
 ---
+  - hosts: perf-server1
+    become: true
+    
+    tasks:
+
+      - name: set max user
+        lineinfile:
+          name: /etc/ssh/sshd_config
+          regexp: '^#MaxSessions 10'
+          line: 'MaxSessions 1000'
+          state: present
+
+      - name: restart sshd
+        service:
+          name: sshd
+          state: restarted
+
+
   - hosts: perf-server2
     become: true
 
     tasks:
- #     - name: load test template
- #       template:
- #           src: template/test.j2
- #           dest: /test.jmx
- #       vars: 
- #         - threads: 200
- #     - name: test
- #       shell: /apache-jmeter-4.0/bin/jmeter -n -t /test.jmx -l /result.csv
- #     - name: load test template
- #       template:
- #           src: template/test.j2
- #           dest: /test.jmx
- 
 
-
+      - name: cleanup
+        file:
+          path: '{{ item }}'
+          state: absent
+        with_items:
+          - /sftp-10-010000KB.jmx
+          - /sftp-10-010000KB.csv
+          - /sftp-10-001000KB.jmx
+          - /sftp-10-001000KB.csv
+          - /sftp-10-000100KB.jmx
+          - /sftp-10-000100KB.csv
+          - /summary.csv
 
 
       - name: load test template
@@ -26,15 +42,8 @@
             dest: /sftp-10-010000KB.jmx
         vars: 
           thread_number: 10
-          source_file: /010000KB
+          source_file: 010000KB
 
-      - name: load test template
-        template:
-            src: template/sftp.j2
-            dest: /sftp-50-001000KB.jmx
-        vars: 
-          thread_number: 50
-          source_file: /0001000KB
 
       - name: load test template
         template:
@@ -42,16 +51,8 @@
             dest: /sftp-10-001000KB.jmx
         vars: 
           thread_number: 10
-          source_file: /001000KB
+          source_file: 001000KB
 
-
-      - name: load test template
-        template:
-            src: template/sftp.j2
-            dest: /sftp-50-000100KB.jmx
-        vars: 
-          thread_number: 50
-          source_file: /000100KB
 
       - name: load test template
         template:
@@ -59,16 +60,51 @@
             dest: /sftp-10-000100KB.jmx
         vars: 
           thread_number: 10
-          source_file: /000100KB
+          source_file: 000100KB
+
+      - name: load test template
+        template:
+            src: template/sftp_get.j2
+            dest: /sftp_get-10-010000KB.jmx
+        vars: 
+          thread_number: 10
+          source_file: 010000KB
+
+
+      - name: load test template
+        template:
+            src: template/sftp_get.j2
+            dest: /sftp_get-10-001000KB.jmx
+        vars: 
+          thread_number: 10
+          source_file: 001000KB
+
+
+      - name: load test template
+        template:
+            src: template/sftp_get.j2
+            dest: /sftp_get-10-000100KB.jmx
+        vars: 
+          thread_number: 10
+          source_file: 000100KB
+
+      - name: load summary ruby
+        template:
+            src: template/summary.rb
+            dest: /summary.rb
 
       - name: test
         shell: /apache-jmeter-4.0/bin/jmeter -n -t /'{{ item }}'.jmx -l /'{{ item }}'.csv
         with_items:
           - sftp-10-010000KB
-          - sftp-50-001000KB
           - sftp-10-001000KB
-          - sftp-50-000100KB
           - sftp-10-000100KB
+          - sftp_get-10-010000KB
+          - sftp_get-10-001000KB
+          - sftp_get-10-000100KB
+
+      - name: get summary
+        shell: ruby /summary.rb 
 
       - name: fetch the result csv
         fetch: 
@@ -77,28 +113,16 @@
         with_items:
           - /sftp-10-010000KB.jmx
           - /sftp-10-010000KB.csv
-          - /sftp-50-001000KB.jmx
-          - /sftp-50-001000KB.csv
           - /sftp-10-001000KB.jmx
           - /sftp-10-001000KB.csv
-          - /sftp-50-000100KB.jmx
-          - /sftp-50-000100KB.csv
           - /sftp-10-000100KB.jmx
           - /sftp-10-000100KB.csv
+          - /sftp_get-10-010000KB.jmx
+          - /sftp_get-10-010000KB.csv
+          - /sftp_get-10-001000KB.jmx
+          - /sftp_get-10-001000KB.csv
+          - /sftp_get-10-000100KB.jmx
+          - /sftp_get-10-000100KB.csv
+          - /summary.csv
 
-      - name: cleanup
-        file:
-          path: /result.csv
-          state: absent
 
-
-
-#      - name: load ruby summary
-#        template:
-#            src: template/summary.rb
-#            dest: /summary.rb
-
-#      - name: 
-#        shell:  ruby /summary.rb
-#        register: hello
-#      - debug: msg="{{hello}}"

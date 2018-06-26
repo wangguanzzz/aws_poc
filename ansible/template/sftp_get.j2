@@ -38,15 +38,15 @@
         </CSVDataSet>
         <hashTree/>
         <org.apache.jmeter.protocol.ssh.sampler.SSHSFTPSampler guiclass="TestBeanGUI" testclass="org.apache.jmeter.protocol.ssh.sampler.SSHSFTPSampler" testname="SSH SFTP" enabled="true">
-          <stringProp name="action">put</stringProp>
+          <stringProp name="action">get</stringProp>
           <intProp name="connectionTimeout">600000</intProp>
-          <stringProp name="destination">{{ source_file }}</stringProp>
+          <stringProp name="destination">download</stringProp>
           <stringProp name="hostname">{{ target_ip }}</stringProp>
           <stringProp name="passphrase"></stringProp>
           <stringProp name="password"></stringProp>
           <intProp name="port">22</intProp>
           <boolProp name="printFile">true</boolProp>
-          <stringProp name="source">/{{ source_file }}</stringProp>
+          <stringProp name="source">{{ source_file }}</stringProp>
           <stringProp name="sshkeyfile">/office.pem</stringProp>
           <stringProp name="username">${username}</stringProp>
         </org.apache.jmeter.protocol.ssh.sampler.SSHSFTPSampler>
