@@ -18,6 +18,25 @@
           key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCcJcNBh1P+jPkCWwIkt068hg6ZvuYnNaAUV7vqQbLHZqJgP5x0uHL18kr412ORY5E82WX/rNNCE8iJLCV4HvPA8wNeY2Hq0HyKzjyba4MjlBPaKWWK8N8FBCzF1tTKycQdPZTGmeFr3+1aizQdhWJ4G6YJl3yfLRpQqNUNzW9sbrhI8AfBjxhNnxOlFulawMBrZ9NRqzRAWfZppBn28uetV345hCXm08YgiUUu4ePLAHZNB5uMIDIS88BHy6FMwKK+IHAGTmAfNEjxlhl0kgwoVeKvVxMHIPVRMPR0waLCqn/6fXNlCeG51KjKTpOKHOPRdlWYhvahmuFIFE9B5NOB office
         with_items: '{{users}}'
 
+      - name: set max user
+        lineinfile:
+          name: /etc/ssh/sshd_config
+          regexp: '^#MaxSessions 10'
+          line: 'MaxSessions 1000'
+          state: present
+
+      - name: set max user2
+        lineinfile:
+          name: /etc/ssh/sshd_config
+          regexp: '^#MaxStartups 10'
+          line: 'MaxStartups 1000'
+          state: present
+
+      - name: restart sshd
+        service:
+          name: sshd
+          state: restarted
+          
 
   - hosts: perf-server2
     become: true

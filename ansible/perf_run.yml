@@ -11,6 +11,13 @@
           line: 'MaxSessions 1000'
           state: present
 
+      - name: set max user2
+        lineinfile:
+          name: /etc/ssh/sshd_config
+          regexp: '^#MaxStartups 10'
+          line: 'MaxStartups 1000'
+          state: present
+
       - name: restart sshd
         service:
           name: sshd
@@ -23,18 +30,7 @@
     tasks:
 
       - name: cleanup
-        file:
-          path: '{{ item }}'
-          state: absent
-        with_items:
-          - /sftp-10-010000KB.jmx
-          - /sftp-10-010000KB.csv
-          - /sftp-10-001000KB.jmx
-          - /sftp-10-001000KB.csv
-          - /sftp-10-000100KB.jmx
-          - /sftp-10-000100KB.csv
-          - /summary.csv
-
+        shell: "rm -f /sftp-*KB.csv"
 
       - name: load test template
         template:
@@ -126,3 +122,21 @@
           - /summary.csv
 
 
+      - name: cleanup
+        file:
+          path: '{{ item }}'
+          state: absent
+        with_items:
+          - /sftp-10-010000KB.jmx
+          - /sftp-10-010000KB.csv
+          - /sftp-10-001000KB.jmx
+          - /sftp-10-001000KB.csv
+          - /sftp-10-000100KB.jmx
+          - /sftp-10-000100KB.csv
+          - /sftp_get-10-010000KB.jmx
+          - /sftp_get-10-010000KB.csv
+          - /sftp_get-10-001000KB.jmx
+          - /sftp_get-10-001000KB.csv
+          - /sftp_get-10-000100KB.jmx
+          - /sftp_get-10-000100KB.csv
+          - /summary.csv
