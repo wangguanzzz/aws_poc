@@ -1,9 +1,13 @@
 [perf-server1]
-#aws_small_1 ansible_host=54.169.128.37 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/chriswang/office.pem
-azure_small_1 ansible_host=40.83.97.183 ansible_ssh_user=pocuser ansible_ssh_private_key_file=/home/chriswang/office.pem
+#aws_small_1 ansible_host=13.229.85.138 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/chriswang/office.pem
+#azure_small_1 ansible_host=40.83.97.183 ansible_ssh_user=pocuser ansible_ssh_private_key_file=/home/chriswang/office.pem
 #alibaba_small_1 ansible_host=47.75.125.223 ansible_ssh_user=root ansible_ssh_private_key_file=/home/chriswang/office.pem
+#ibm_small_1 ansible_host=119.81.160.196 ansible_ssh_user=root ansible_ssh_private_key_file=/home/chriswang/office.pem
+#google_small_1 ansible_host=35.229.228.66  ansible_ssh_user=office ansible_ssh_private_key_file=/home/chriswang/office.pem
 
 [perf-server2]
-#aws_small_2 ansible_host=54.255.153.104 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/chriswang/office.pem
-azure_small_2 ansible_host=40.83.103.36 ansible_ssh_user=pocuser ansible_ssh_private_key_file=/home/chriswang/office.pem
-#alibaba_small_2 ansible_host=47.75.144.54 ansible_ssh_user=root ansible_ssh_private_key_file=/home/chriswang/office.pem
+#aws_small_2 ansible_host=13.229.94.175 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/chriswang/office.pem
+#azure_small_2 ansible_host=40.83.103.36 ansible_ssh_user=pocuser ansible_ssh_private_key_file=/home/chriswang/office.pem
+#alibaba_small_2 ansible_host=47.75.129.161 ansible_ssh_user=root ansible_ssh_private_key_file=/home/chriswang/office.pem
+#ibm_small_2 ansible_host=119.81.160.198 ansible_ssh_user=root ansible_ssh_private_key_file=/home/chriswang/office.pem
+google_small_2 ansible_host=35.229.191.7  ansible_ssh_user=office ansible_ssh_private_key_file=/home/chriswang/office.pem
